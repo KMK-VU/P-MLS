@@ -15,15 +15,12 @@ class dataframe {
    if (isfile){
    
      this.isDataReady = false;
+     var self = this;
      Papa.parse(arg, {
      header: true,
      dynamicTyping: true,
      complete: function(results) {
-	// Execute when parsing is over
-	this.json_data = results;
-	this.isDataReady=true;
-        console.log("Parsing Finished");
-	console.log(this.json_data);
+	self._update_data(results);
       }
     });
 	
@@ -33,7 +30,12 @@ class dataframe {
    }
   }
   
-  
+   // _update_data : Function used to update data structure when parsing task is finished
+  _update_data(json_object){
+  this.json_data = json_object;
+  this.isDataReady = true;
+  console.log("Data updated");
+  }
   
   
   // show info about the dataframe in the log. Mainly for debugging
