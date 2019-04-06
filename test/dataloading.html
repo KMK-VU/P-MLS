@@ -1,14 +1,16 @@
 
 <head>
  <meta charset="UTF-8">
-</head> 
+</head>
 
 <!-- Libraries loading -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.2/xlsx.extendscript.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
 <!-- Using raw github to serve file-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/KMK-VU/PDAS/js-browser/pdas-data.js"></script>
 
 <!-- Offline: Uncomment if internet is not available or src are not working anymore
+<script src="../js-external-backup/xlsx.extendscript.js"></script>
 <script src="../js-external-backup/papaparse.min.js"></script>
 <script src="../js-browser/pdas-data.js"></script>
  -->
@@ -21,7 +23,7 @@
 <input type="file" id="data-csv" onchange="df.read_csv(this.files[0])"></input>
 &nbsp
 <label for="data-csv" class="btn">Select Excel file</label>
-<input type="file" id="data-xlsx" onchange="df.read_csv(this.files[0])"></input>
+<input type="file" id="data-xlsx" onchange="df.read_excel(this.files[0])"></input>
 <br>
 <br>
 <br>
