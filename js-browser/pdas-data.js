@@ -1,4 +1,4 @@
-    
+
 class dataframe {
 
 
@@ -8,12 +8,12 @@ class dataframe {
 		this.shape = {};
 		this.columns = {};
 	}
- 
+
 	/////////////////////////////////////////////////////////////////
 	// read_csv : Function used to read big csv file  (streaming) //
 	///////////////////////////////////////////////////////////////
 	read_csv(arg){
-		
+
 		// Parsing papaparse data to the core data structures
 		var result = {};
 		var to_json = function to_json(papaparse){
@@ -26,19 +26,23 @@ class dataframe {
 				for (var j = 0 ; j<columns.length; j++){
 					values[j] = papaparse[i][columns[j]];
 				}
-				x[i] = values; 
+				x[i] = values;
 			};
 		result["Sheet1"] = x;
 		return result;
 		};
-		
+
 		this.isDataReady = false;
 		var self = this;
-		Papa.parse(arg, { header: true, download:true, dynamicTyping: true, 
+		Papa.parse(arg, { header: true, download:true, dynamicTyping: true,
+      delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP]
+}
+
+
 		complete:function(results){self._update_data(to_json(results.data));}});
-		
+
 	}
-  
+
 	///////////////////////////////////////////////////////////////////////////////////
 	// read_excel : Function used to read excel file small to medium excel/csv file //
 	/////////////////////////////////////////////////////////////////////////////////
@@ -62,7 +66,7 @@ class dataframe {
 		};
 		reader.readAsBinaryString(arg);
 	}
-  
+
 	//////////////////////////////////////////////////////////////////////////////////////////
 	// _update_data : Function used to update data structure when parsing task is finished //
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -81,10 +85,10 @@ class dataframe {
 		this.isDataReady = true;
 		console.log("Data updated");
 	}
-  
 
-  
-  
+
+
+
 	/////////////////////////////////////////////////////////////////////
 	// show info about the dataframe in the log. Mainly for debugging //
 	///////////////////////////////////////////////////////////////////
@@ -93,5 +97,5 @@ class dataframe {
 		console.log("variables: ",this.columns);
 		console.log("shapes: ",this.shape);
 	}
-  
+
 }
