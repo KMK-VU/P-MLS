@@ -6,9 +6,8 @@
 <!-- Libraries loading -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.2/xlsx.extendscript.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
-<!-- Using raw github to serve file-->
+<!-- Using js delivr to serve github file-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/KMK-VU/PDAS/js-browser/pdas-data.js"></script>
-
 <!-- Offline: Uncomment if internet is not available or src are not working anymore
 <script src="../js-external-backup/xlsx.extendscript.js"></script>
 <script src="../js-external-backup/papaparse.min.js"></script>
@@ -20,25 +19,52 @@
 
 
 <label for="data-csv" class="btn">Select csv file</label>
-<input type="file" id="data-csv" onchange="df.read_csv(this.files[0])"></input>
+<input type="file" id="data-csv" onchange="df.read_csv(this.files[0],feed_sheet_options)"></input>
 &nbsp
 <label for="data-csv" class="btn">Select Excel file</label>
-<input type="file" id="data-xlsx" onchange="df.read_excel(this.files[0])"></input>
+<input type="file" id="data-xlsx" onchange="df.read_excel(this.files[0],feed_sheet_options)"></input>
 <br>
 <br>
 <br>
-<button href="#"  onclick="df.show_log('json')">Show data in log</button>
 
+<br>
+<br>
+<select id="sheet" onchange="update_info(this.value)"">
+
+</select>
+&nbsp
+<select id="columns">
+
+</select>
+
+<br>
+<p id="data_shape"><p>
 <br>
 <br>
 <br>
 
 <!-- Test Results in  HTML -->
-
+<table id="output_table">
+</table>
 
 
 <!-- JS Script Testing -->
 <script>
-var df = new dataframe("hello");
+// Initiating the dataframe object
+var df = new dataframe();
+
+// Show the different sheets
+function feed_sheet_options(){
+  df.sheet_html("sheet");
+  update_info(Object.keys(df.columns)[0]);
+}
+
+// Update info based on sheet selection
+function update_info(sheetvalue){
+  var summary = document.getElementById("data_shape");
+  summary.innerHTML = `<b>Data Summary - </b>${df.shape[sheetvalue][0]} observations described by ${df.shape[sheetvalue][1]} variables `
+  df.variable_html(sheetvalue, "columns");
+  df.table_html(sheetvalue,"output_table");
+}
 
 </script>
